@@ -29,7 +29,7 @@ public class FindNearest : MonoBehaviour {
     public float detectRadio;
     [Range(0.01f,5)]
     public float refreshTime; // Refresh Lists to look for nearest
-    public List<Collider> collitions = new List<Collider>();
+    public List<Collider> collisions = new List<Collider>();
     public List<Target> targets_ = new List<Target>();
 
 
@@ -40,7 +40,7 @@ public class FindNearest : MonoBehaviour {
     IEnumerator FindNearestLoop() {
         while (true) {
             yield return new WaitForSeconds(refreshTime);
-            collitions.Clear();
+            collisions.Clear();
             targets_.Clear();
             LookForNearest();
         }
@@ -50,8 +50,8 @@ public class FindNearest : MonoBehaviour {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectRadio, detectMask.value); // Get Colliders 
         if (colliders.Length > 0) {
             foreach (Collider col in colliders) {
-                if (!collitions.Contains(col)) {
-                    collitions.Add(col);        // Add Colider to List
+                if (!collisions.Contains(col)) {
+                    collisions.Add(col);        // Add Colider to List
                     float distance = Vector3.Distance(gameObject.transform.position, col.transform.position); // Get distance between this object and target
                     targets_.Add(new Target(gameObject.name, distance, col.gameObject));        // Add target to list
                     targets_.Sort(delegate (Target a, Target b) {       // Sort List to minor distance to max
